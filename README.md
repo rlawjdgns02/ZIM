@@ -1,185 +1,77 @@
-# ZIM: Zero-Shot Image Matting for Anything
+# ZIM 재평가: 다른 데이터셋에서의 Zero-Shot Image Matting 검증
 
-[Beomyoung Kim](https://beomyoung-kim.github.io/), Chanyong Shin, [Joonhyun Jeong](https://bestdeveloper691.github.io/), Hyungsik Jung, Se-Yun Lee, Sewhan Chun, [Dong-Hyun Hwang](https://hwangdonghyun.github.io/), Joonsang Yu<br>
+> **출처 (Original Work)**
+> 이 저장소는 NAVER Cloud의 [ZIM](https://github.com/naver-ai/ZIM) 공식 코드를 기반으로 수정한 것입니다.
+>
+> - 논문: Beomyoung Kim, Chanyong Shin, Joonhyun Jeong, Hyungsik Jung, Se-Yun Lee, Sewhan Chun, Dong-Hyun Hwang, Joonsang Yu.
+>   **"ZIM: Zero-Shot Image Matting for Anything"**, ICCV 2025. [arXiv:2411.00626](https://arxiv.org/abs/2411.00626)
+> - 원본 코드: https://github.com/naver-ai/ZIM (Copyright (c) 2024-present NAVER Cloud Corp.)
+> - 라이선스: [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) — 비영리 목적으로만 사용 가능합니다. 자세한 내용은 [LICENSE](LICENSE), [NOTICE](NOTICE)를 참고하세요.
+> - 일부 코드는 [Segment Anything](https://github.com/facebookresearch/segment-anything) (Apache 2.0)을 기반으로 합니다.
+>
+> 원본 README와 사용법은 [원본 저장소](https://github.com/naver-ai/ZIM#readme)에서 확인할 수 있습니다.
 
-<sub>NAVER Cloud, ImageVision</sub><br />
+## 용도
 
-[![Paper](https://img.shields.io/badge/Paper-arxiv-red)](https://arxiv.org/pdf/2411.00626)
-[![Page](https://img.shields.io/badge/Project_page-blue)](https://naver-ai.github.io/ZIM) 	
-[![🤗 demo](https://img.shields.io/badge/Hugging%20Face-Demo-FFD21E?logo=huggingface&logo)](https://huggingface.co/spaces/naver-iv/ZIM_Zero-Shot-Image-Matting)
-[![🤗 Dataset](https://img.shields.io/badge/Hugging%20Face%20Dataset-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/datasets/naver-iv/MicroMat-3K)
-[![🤗 Models](https://img.shields.io/badge/%F0%9F%A4%97-Models-yellow)](https://huggingface.co/models?search=naver-iv/zim)
-[![🤗 Collection](https://img.shields.io/badge/Hugging%20Face%20Collection-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/collections/naver-iv/zim-6739a32211b7efeeed83b674)
+강의 실습 프로젝트입니다. 논문이 MicroMat-3K에서 보인 주장이 **다른 데이터셋에서도 성립하는지** 사전학습된 ZIM으로 zero-shot 평가하여 검증합니다.
 
-![Teaser](https://github.com/naver-ai/ZIM/releases/download/asset-v1/amg.gif)
-![Teaser](https://github.com/naver-ai/ZIM/releases/download/asset-v1/teaser.png)
+- 공개된 코드는 추론/평가용(ONNX 가중치)이며 학습 코드가 없으므로, 재학습이 필요한 실험(라벨 컨버터, SA1B-Matte 등)은 다루지 않습니다.
+- 모델 가중치와 데이터셋은 이 저장소에 포함되어 있지 않습니다. 아래 안내에 따라 원 출처에서 받아야 합니다.
 
-## Introduction
+**원본 대비 변경 사항:** `.gitignore` 추가, README 교체. (실험 코드가 추가되면 여기에 기록합니다.)
 
-The recent segmentation foundation model, Segment Anything Model (SAM), exhibits strong zero-shot segmentation capabilities, but it falls short in generating fine-grained precise masks. To address this limitation, we propose a novel zero-shot image matting model, called ZIM, with two key contributions: First, we develop a label converter that transforms segmentation labels into detailed matte labels, constructing the new SA1B-Matte dataset without costly manual annotations. Training SAM with this dataset enables it to generate precise matte masks while maintaining its zero-shot capability. Second, we design the zero-shot matting model equipped with a hierarchical pixel decoder to enhance mask representation, along with a prompt-aware masked attention mechanism to improve performance by enabling the model to focus on regions specified by visual prompts. We evaluate ZIM using the newly introduced MicroMat-3K test set, which contains high-quality micro-level matte labels. Experimental results show that ZIM outperforms existing methods in fine-grained mask generation and zero-shot generalization. Furthermore, we demonstrate the versatility of ZIM in various downstream tasks requiring precise masks, such as image inpainting and 3D NeRF. Our contributions provide a robust foundation for advancing zero-shot matting and its downstream applications across a wide range of computer vision tasks. 
+## 환경 설정
 
-![Model overview](https://github.com/naver-ai/ZIM/releases/download/asset-v1/method_overview.png)
-
-## Updates    
-- 2025.07.24: ZIM has been accepted to **ICCV 2025** as a **Highlight Paper**!
-- 2024.11.04: official ZIM code update
-
-
-# Installation
-
-Install the required packages with the command below:
-```bash
-pip install zim_anything
-```
-
-or
-```bash
-git clone https://github.com/naver-ai/ZIM.git
-cd ZIM; pip install -e .
-```
-
-To enable GPU acceleration, please install the compatible `onnxruntime-gpu` package based on your environment settings (CUDA and CuDNN versions), following the instructions in the [onnxruntime installation docs](https://onnxruntime.ai/docs/execution-providers/CUDA-ExecutionProvider.html#requirements).
-
-
-## Demo
-
-[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/spaces/naver-iv/ZIM_Zero-Shot-Image-Matting)  We provide a Gradio demo code in `demo/gradio_demo.py`. You can run our model demo locally by running:
+테스트 환경: Ubuntu 24.04, RTX 3090, NVIDIA 드라이버 595 (시스템 CUDA Toolkit 설치 불필요)
 
 ```bash
-python demo/gradio_demo.py
+# 1) conda 환경
+conda create -n zim python=3.10 -y
+conda activate zim
+
+# 2) PyTorch (CUDA 12.4 + cuDNN 9 포함)
+pip install torch==2.4.1 torchvision==0.19.1 --index-url https://download.pytorch.org/whl/cu124
+
+# 3) ONNX Runtime GPU
+pip install onnxruntime-gpu==1.20.2
+
+# 4) 기타 의존성
+pip install easydict opencv-python scikit-image pillow tqdm matplotlib huggingface_hub
+pip install git+https://github.com/facebookresearch/segment-anything.git
+
+# 5) ZIM 설치
+pip install -e .
+
+# 6) ONNX Runtime이 torch에 포함된 cuDNN/CUDA 라이브러리를 찾도록 경로 등록 (최초 1회)
+N=$CONDA_PREFIX/lib/python3.10/site-packages/nvidia
+conda env config vars set LD_LIBRARY_PATH=$N/cudnn/lib:$N/cublas/lib:$N/cuda_runtime/lib:$N/cufft/lib:$N/curand/lib:$N/cuda_nvrtc/lib
+conda deactivate && conda activate zim
 ```
 
-[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/spaces/naver-iv/ZIM_demo_with_SAM)  In addition, we provide a Gradio demo code `demo/gradio_demo_comparison.py` to qualitatively compare ZIM with SAM:
+### 가중치 및 데이터 다운로드
 
 ```bash
-python demo/gradio_demo.py
-```
-## Getting Started
+mkdir -p results data
 
-After the installation step is done, you can utilize our model in just a few lines as below. `ZimPredictor` is compatible with `SamPredictor`, such as `set_image()` or `predict()`.
-```python
-from zim_anything import zim_model_registry, ZimPredictor
+# ZIM (Hugging Face) — encoder.onnx / decoder.onnx 가 든 폴더
+hf download naver-iv/zim-anything-vitb --local-dir results/ --include "zim_vit_b_2043/*"
+hf download naver-iv/zim-anything-vitl --local-dir results/ --include "zim_vit_l_2092/*"
 
-backbone = "vit_l"
-ckpt_p = "results/zim_vit_l_2092"
+# SAM (비교용, Meta 공식)
+wget -P results https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth
 
-model = zim_model_registry[backbone](checkpoint=ckpt_p)
-if torch.cuda.is_available():
-    model.cuda()
-
-predictor = ZimPredictor(model)
-predictor.set_image(<image>)
-masks, _, _ = predictor.predict(<input_prompts>)
+# MicroMat-3K 테스트셋
+wget -P data https://github.com/naver-ai/ZIM/releases/download/testset-v1/MicroMat3K.tar
+tar -xf data/MicroMat3K.tar -C data
 ```
 
-We also provide code for generating masks for an entire image and visualization:
+### 설치 확인
 
-```python
-from zim_anything import zim_model_registry, ZimAutomaticMaskGenerator
-from zim_anything.utils import show_mat_anns
-
-backbone = "vit_l"
-ckpt_p = "results/zim_vit_l_2092"
-
-model = zim_model_registry[backbone](checkpoint=ckpt_p)
-if torch.cuda.is_available():
-    model.cuda()
-
-mask_generator = ZimAutomaticMaskGenerator(model)
-masks = mask_generator.generate(<image>)  # Automatically generated masks
-masks_vis = show_mat_anns(<image>, masks)  # Visualize masks
-```
-
-Additionally, masks can be generated for images from the command line:
 ```bash
-bash script/run_amg.sh
-```
-
-We provide Pretrained-weights of ZIM.
-|   MODEL ZOO  | Link |
-| :------:  | :------:  |
-| zim_vit_b | [download](https://huggingface.co/naver-iv/zim-anything-vitb/tree/main/zim_vit_b_2043) |
-| zim_vit_l | [download](https://huggingface.co/naver-iv/zim-anything-vitl/tree/main/zim_vit_l_2092) |
-
-
-## Dataset Preparation
-
-### 1) MicroMat-3K Dataset
-![MicroMat-3K](https://github.com/naver-ai/ZIM/releases/download/asset-v1/qualitative_micromat.png)
-We introduce a new test set named MicroMat-3K, to evaluate zero-shot interactive matting models. It consists of 3,000 high-resolution images paired with micro-level matte labels, providing a comprehensive benchmark for testing various matting models under different levels of detail.
-
-Downloading **MicroMat-3K** dataset is available [here](https://github.com/naver-ai/ZIM/releases/download/testset-v1/MicroMat3K.tar) or [huggingface](https://huggingface.co/datasets/naver-iv/MicroMat-3K)
-
-#### 1-1) Dataset structure
-
-Dataset structure should be as follows:
-```bash
-└── /path/to/dataset/MicroMat3K
-    ├── img
-    │   ├── 0001.png
-    ├── matte
-    │   ├── coarse
-    │   │   ├── 0001.png
-    │   └── fine
-    │       ├── 0001.png
-    ├── prompt
-    │   ├── coarse
-    │   │   ├── 0001.png
-    │   └── fine
-    │       ├── 0001.png
-    └── seg
-        ├── coarse
-        │   ├── 0001_01.json
-        └── fine
-            ├── 0001_01.json
-```
-
-#### 1-2) Prompt file configuration
-
-Prompt file configuration should be as follows:
-```json
-{
-    "point": [[x1, y1, 1], [x2, y2, 0], ...],   # 1: Positive, 0: Negative prompt
-    "bbox": [x1, y1, x2, y2]                    # [X, Y, X, Y] format
-}
-```
-
-## Evaluation
-
-We provide an evaluation script, which includes a comparison with SAM, in `script/run_eval.sh`. Make sure the dataset structure is prepared.
-
-First, modify `data_root` in `script/run_eval.sh`
-```bash
-...
-data_root="/path/to/dataset/"
-...
-```
-
-Then, run evaluation script file.
-```bash
-bash script/run_eval.sh
-```
-
-The evaluation result on the MicroMat-3K dataset would be as follows:
-
-![Table](https://github.com/naver-ai/ZIM/releases/download/asset-v1/Table1.png)
-
-
-## How To Cite
-
-```
-@article{kim2024zim,
-  title={ZIM: Zero-Shot Image Matting for Anything},
-  author={Kim, Beomyoung and Shin, Chanyong and Jeong, Joonhyun and Jung, Hyungsik and Lee, Se-Yun and Chun, Sewhan and Hwang, Dong-Hyun and Yu, Joonsang},
-  journal={arXiv preprint arXiv:2411.00626},
-  year={2024}
-}
-```
-
-## License
-
-```
-ZIM
-Copyright (c) 2024-present NAVER Cloud Corp.
-CC BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/)  
+python -c "
+from zim_anything import zim_model_registry
+m = zim_model_registry['vit_b'](checkpoint='results/zim_vit_b_2043').cuda()
+print(m.encoder.ort_session.get_providers())
+"
+# ['CUDAExecutionProvider', 'CPUExecutionProvider'] 가 출력되면 정상
 ```

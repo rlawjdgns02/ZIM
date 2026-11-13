@@ -1,0 +1,31 @@
+# 체크포인트 / 가중치 (Hugging Face, Meta에서 다운로드)
+results/
+*.onnx
+*.pth
+*.pt
+*.ckpt
+
+# 데이터셋 (재배포 금지, 다운로드 방법은 README 참고)
+data/
+*.tar
+*.zip
+
+# 실험 출력
+outputs/
+logs/
+demo/amg/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# 환경 / IDE
+.env
+.venv/
+.vscode/
+.idea/
+.ipynb_checkpoints/
