@@ -1,0 +1,120 @@
+LOG) Initialization start
+LOG) ZIM Dataset: fine (750)
+LOG) ZIM Dataset: coarse (2250)
+LOG) Start loading models
+LOG) Loading model ['zim', 'sam']
+LOG) Start evaluation
+
+LOG) zim evaluation start.
+LOG) evaluate zim on fine dataset
+LOG) evaluate zim on coarse dataset
+
+LOG) sam evaluation start.
+LOG) evaluate sam on fine dataset
+LOG) evaluate sam on coarse dataset
+
+LOG)All evaluation done. Result : 
+
+
+
+
+
+============================================
+Model: zim, Prompt: point, Scale: all, dataset: MicroMat3K (fine)
+Result | MSE 8.2262 | SAD 31.3353 | MAE 10.7594 | Grad 5.3074 | Conn 31.0830
+
+Model: zim, Prompt: point, Scale: S, dataset: MicroMat3K (fine)
+Result | MSE 0.8668 | SAD 5.5788 | MAE 1.8424 | Grad 1.3025 | Conn 5.1817
+
+Model: zim, Prompt: point, Scale: M, dataset: MicroMat3K (fine)
+Result | MSE 3.9556 | SAD 15.9932 | MAE 5.6023 | Grad 3.8528 | Conn 15.8453
+
+Model: zim, Prompt: point, Scale: L, dataset: MicroMat3K (fine)
+Result | MSE 25.0535 | SAD 90.8707 | MAE 31.1199 | Grad 13.0525 | Conn 90.6431
+
+Model: zim, Prompt: bbox, Scale: all, dataset: MicroMat3K (fine)
+Result | MSE 1.8902 | SAD 9.9199 | MAE 3.4126 | Grad 4.7936 | Conn 9.6102
+
+Model: zim, Prompt: bbox, Scale: S, dataset: MicroMat3K (fine)
+Result | MSE 0.2053 | SAD 1.3012 | MAE 0.4593 | Grad 1.0893 | Conn 1.2450
+
+Model: zim, Prompt: bbox, Scale: M, dataset: MicroMat3K (fine)
+Result | MSE 2.2177 | SAD 9.7767 | MAE 3.3610 | Grad 3.5338 | Conn 9.5829
+
+Model: zim, Prompt: bbox, Scale: L, dataset: MicroMat3K (fine)
+Result | MSE 3.6225 | SAD 21.7351 | MAE 7.4653 | Grad 11.8183 | Conn 20.8968
+
+Model: zim, Prompt: point, Scale: all, dataset: MicroMat3K (coarse)
+Result | MSE 1.7981 | SAD 6.6792 | MAE 2.3332 | Grad 1.4716 | Conn 6.5054
+
+Model: zim, Prompt: point, Scale: S, dataset: MicroMat3K (coarse)
+Result | MSE 1.4503 | SAD 5.4295 | MAE 1.8985 | Grad 1.1222 | Conn 5.2658
+
+Model: zim, Prompt: point, Scale: M, dataset: MicroMat3K (coarse)
+Result | MSE 1.7303 | SAD 6.8062 | MAE 2.3814 | Grad 2.3708 | Conn 6.6455
+
+Model: zim, Prompt: point, Scale: L, dataset: MicroMat3K (coarse)
+Result | MSE 19.1221 | SAD 64.3072 | MAE 22.3347 | Grad 6.8494 | Conn 63.4912
+
+Model: zim, Prompt: bbox, Scale: all, dataset: MicroMat3K (coarse)
+Result | MSE 0.4475 | SAD 1.8595 | MAE 0.6587 | Grad 1.2814 | Conn 1.8062
+
+Model: zim, Prompt: bbox, Scale: S, dataset: MicroMat3K (coarse)
+Result | MSE 0.1984 | SAD 0.9021 | MAE 0.3194 | Grad 0.9223 | Conn 0.8803
+
+Model: zim, Prompt: bbox, Scale: M, dataset: MicroMat3K (coarse)
+Result | MSE 1.3820 | SAD 5.2774 | MAE 1.8736 | Grad 2.2854 | Conn 5.1259
+
+Model: zim, Prompt: bbox, Scale: L, dataset: MicroMat3K (coarse)
+Result | MSE 0.6320 | SAD 4.7280 | MAE 1.6313 | Grad 5.8150 | Conn 4.4012
+
+Model: sam, Prompt: point, Scale: all, dataset: MicroMat3K (fine)
+Result | MSE 21.6896 | SAD 68.1618 | MAE 23.3363 | Grad 16.4670 | Conn 67.8124
+
+Model: sam, Prompt: point, Scale: S, dataset: MicroMat3K (fine)
+Result | MSE 2.7245 | SAD 8.5377 | MAE 2.9964 | Grad 3.6709 | Conn 8.4903
+
+Model: sam, Prompt: point, Scale: M, dataset: MicroMat3K (fine)
+Result | MSE 7.1459 | SAD 23.9919 | MAE 8.2510 | Grad 10.0546 | Conn 23.8467
+
+Model: sam, Prompt: point, Scale: L, dataset: MicroMat3K (fine)
+Result | MSE 70.8008 | SAD 220.0384 | MAE 75.1751 | Grad 44.0797 | Conn 218.9513
+
+Model: sam, Prompt: bbox, Scale: all, dataset: MicroMat3K (fine)
+Result | MSE 11.0573 | SAD 36.0569 | MAE 12.7040 | Grad 14.8312 | Conn 35.8005
+
+Model: sam, Prompt: bbox, Scale: S, dataset: MicroMat3K (fine)
+Result | MSE 0.3288 | SAD 1.7159 | MAE 0.6007 | Grad 2.2326 | Conn 1.6614
+
+Model: sam, Prompt: bbox, Scale: M, dataset: MicroMat3K (fine)
+Result | MSE 2.9829 | SAD 11.6204 | MAE 4.0880 | Grad 8.6141 | Conn 11.4665
+
+Model: sam, Prompt: bbox, Scale: L, dataset: MicroMat3K (fine)
+Result | MSE 38.5909 | SAD 121.9013 | MAE 42.9651 | Grad 41.8612 | Conn 121.2072
+
+Model: sam, Prompt: point, Scale: all, dataset: MicroMat3K (coarse)
+Result | MSE 5.5749 | SAD 17.1141 | MAE 5.7623 | Grad 4.8045 | Conn 17.0562
+
+Model: sam, Prompt: point, Scale: S, dataset: MicroMat3K (coarse)
+Result | MSE 4.0958 | SAD 12.7156 | MAE 4.2051 | Grad 3.6753 | Conn 12.6901
+
+Model: sam, Prompt: point, Scale: M, dataset: MicroMat3K (coarse)
+Result | MSE 5.4045 | SAD 16.9294 | MAE 5.8146 | Grad 7.0954 | Conn 16.7781
+
+Model: sam, Prompt: point, Scale: L, dataset: MicroMat3K (coarse)
+Result | MSE 77.7674 | SAD 227.8037 | MAE 78.8873 | Grad 29.8274 | Conn 227.3675
+
+Model: sam, Prompt: bbox, Scale: all, dataset: MicroMat3K (coarse)
+Result | MSE 1.0452 | SAD 3.5194 | MAE 1.2326 | Grad 2.5535 | Conn 3.4538
+
+Model: sam, Prompt: bbox, Scale: S, dataset: MicroMat3K (coarse)
+Result | MSE 0.1796 | SAD 0.8202 | MAE 0.2889 | Grad 1.2461 | Conn 0.7870
+
+Model: sam, Prompt: bbox, Scale: M, dataset: MicroMat3K (coarse)
+Result | MSE 2.4562 | SAD 8.0434 | MAE 2.8663 | Grad 5.4421 | Conn 7.8875
+
+Model: sam, Prompt: bbox, Scale: L, dataset: MicroMat3K (coarse)
+Result | MSE 24.5113 | SAD 75.1555 | MAE 25.6312 | Grad 28.5814 | Conn 74.6808
+
+============================================
+

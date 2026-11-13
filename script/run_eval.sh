@@ -1,5 +1,5 @@
 amp=True
-data_root=YOUR_DATA_ROOT
+data_root=data
 
 # network
 encoder="vit_b"
