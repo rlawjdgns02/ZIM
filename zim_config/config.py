@@ -35,6 +35,7 @@ config_.eval.prompt_type = "point,bbox"
 config_.eval.model_list = "zim,sam"
 config_.eval.zim_weights = ""
 config_.eval.sam_weights = ""
+config_.eval.save_dir = ""  # if set, write per-image scores (CSV) and the summary here
 """
     Dataset configs
 """

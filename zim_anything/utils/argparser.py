@@ -81,7 +81,10 @@ def get_parser(verbose=False):
         type=str,
         default=config_.eval.sam_weights,
     )
-    
+    p.add_argument(
+        "--eval-save-dir", type=str, default=config_.eval.save_dir,
+    )
+
     # dataset config
     p.add_argument(
         "--dataset-valset", type=str, default=config_.dataset.valset,

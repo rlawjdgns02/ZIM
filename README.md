@@ -18,7 +18,13 @@
 - 공개된 코드는 추론/평가용(ONNX 가중치)이며 학습 코드가 없으므로, 재학습이 필요한 실험(라벨 컨버터, SA1B-Matte 등)은 다루지 않습니다.
 - 모델 가중치와 데이터셋은 이 저장소에 포함되어 있지 않습니다. 아래 안내에 따라 원 출처에서 받아야 합니다.
 
-**원본 대비 변경 사항:** `.gitignore` 추가, README 교체. (실험 코드가 추가되면 여기에 기록합니다.)
+**원본 대비 변경 사항:**
+- `.gitignore` 추가, README 교체
+- `script/prepare_dataset.py` 추가: 외부 matting 데이터셋(AM-2K, PPM-100, AIM-500, Transparent-460)을 평가 형식(`data_list.txt` + 프롬프트 json)으로 변환
+- `script/run_eval_dataset.sh` 추가: 변환된 데이터셋에서 ZIM vs SAM 평가
+- `eval/main_eval.py`: 진행률 표시, 크기 그룹별 샘플 수(N) 출력, `--eval-save-dir` 지정 시 이미지별 점수 CSV와 요약 저장
+- `script/run_eval.sh`: `data_root`를 `data`로 지정
+- `reports/`: 실험 결과와 분석
 
 ## 환경 설정
 
